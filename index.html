@@ -3,498 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wedzx V2 | AI Destekli Free Fire Hassasiyet</title>
+    <title>wedzxsensi | AI Hassasiyet</title>
     <style>
-        :root {
-            --bg-color: #0b0b0f;
-            --card-bg: #12121a;
-            --primary: #00ff88;
-            --primary-hover: #00e575;
-            --text-main: #ffffff;
-            --text-muted: #8e8e9f;
-            --accent-red: #ff3e3e;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+        
+        :root { --neon-red: #ff1f1f; --bg-dark: #0a0a0a; }
+        
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at top, #1a1a2e 0%, var(--bg-color) 70%);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; margin: 0;
+            background-image: radial-gradient(circle, #1a0505 0%, #0a0a0a 80%);
         }
 
-        header {
-            width: 100%;
-            background-color: rgba(18, 18, 26, 0.8);
+        .logo { font-size: 3rem; font-weight: 700; margin-bottom: 5px; }
+        .logo span { color: var(--neon-red); }
+        .subtitle { color: #555; letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 40px; }
+
+        .box {
+            width: 350px; padding: 30px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid #333; border-radius: 20px;
             backdrop-filter: blur(10px);
-            padding: 25px 0;
-            text-align: center;
-            border-bottom: 2px solid var(--primary);
-            box-shadow: 0 4px 30px rgba(0, 255, 136, 0.15);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: var(--primary);
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        label { color: #888; font-size: 0.8rem; display: block; margin-bottom: 10px; }
+        
+        input {
+            width: 100%; padding: 15px; box-sizing: border-box;
+            background: #111; border: 1px solid #333; color: white;
+            border-radius: 8px; margin-bottom: 25px; outline: none;
         }
 
-        header p {
-            margin: 8px 0 0 0;
-            color: var(--text-muted);
-            font-size: 1rem;
-            letter-spacing: 1px;
+        .fps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .fps-btn {
+            background: #111; border: 1px solid #333; color: #777;
+            padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
-
-        .container {
-            width: 90%;
-            max-width: 750px;
-            margin: 40px auto;
-        }
-
-        .ai-box {
-            background-color: var(--card-bg);
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 1px solid #1f1f2e;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), #00bcff);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        select {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid #222230;
-            background-color: #161622;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
-        }
+        .fps-btn.active { background: var(--neon-red); border-color: var(--neon-red); color: white; }
 
         button {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--primary) 0%, #00d2ff 100%);
-            color: #000;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            width: 100%; padding: 18px; background: var(--neon-red);
+            border: none; border-radius: 8px; color: white;
+            font-weight: bold; cursor: pointer; font-size: 1.1rem;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
-        }
-
-        /* Yükleniyor (Loading) Efekti */
-        .loader-container {
-            display: none;
-            text-align: center;
-            margin: 25px 0;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #161622;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loader-text {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-
-        /* Sonuç Kartı */
-        .result-card {
-            display: none;
-            background: linear-gradient(180deg, #161622 0%, #0f0f16 100%);
-            border: 1.5px solid var(--primary);
-            padding: 25px;
-            border-radius: 14px;
-            margin-top: 30px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            background-color: rgba(0, 255, 136, 0.1);
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .result-title {
-            margin: 0 0 25px 0;
-            font-size: 1.8rem;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .sensitivity-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 480px) {
-            .sensitivity-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .sens-item {
-            background-color: #1e1e2d;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #29293d;
-            transition: all 0.3s ease;
-        }
-
-        .sens-item:hover {
-            border-color: var(--primary);
-            background-color: #222235;
-        }
-
-        .sens-item span {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sens-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .dpi-box {
-            grid-column: span 2;
-            background: linear-gradient(90deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 210, 255, 0.05) 100%);
-            border: 1px dashed var(--primary) !important;
-        }
-
-        @media (max-width: 480px) {
-            .dpi-box {
-                grid-column: span 1;
-            }
-        }
-
-        .dpi-box .sens-value {
-            color: var(--primary);
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 20px 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-align: center;
-        }
+        footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>wedzx V2</h1>
-        <p>Yapay Zeka Destekli Hassasiyet Veritabanı</p>
-    </header>
+    <div class="logo">wedz<span>x</span>sensi</div>
+    <div class="subtitle">FREE FIRE • AI HASSASİYET MOTORU</div>
 
-    <div class="container">
+    <div class="box">
+        <label>CİHAZ MODELİ</label>
+        <input type="text" id="model" placeholder="Örn. iPhone 13, Redmi Note 13">
         
-        <div class="ai-box">
-            <div class="section-title">Hassasiyetini AI ile Optimize Et</div>
-            
-            <div class="form-group">
-                <label for="os">İşletim Sistemi Seç</label>
-                <select id="os" onchange="updateModels()">
-                    <option value="">Seçiniz...</option>
-                    <option value="ios">Apple (iOS)</option>
-                    <option value="android">Android</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="model">Cihaz Modeli</label>
-                <select id="model">
-                    <option value="">Önce işletim sistemi seçin</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="playstyle">Oyun Tarzın</label>
-                <select id="playstyle">
-                    <option value="balanced">Dengeli / Standart</option>
-                    <option value="rusher">Agresif / Rusher (Hızlı Tekli Vuruş)</option>
-                    <option value="sniper">Sniper / Uzak Mesafe (Kararlı Nişan)</option>
-                </select>
-            </div>
-
-            <button onclick="startAICalculation()">Yapay Zeka Analizini Başlat</button>
-
-            <div class="loader-container" id="loader">
-                <div class="spinner"></div>
-                <div class="loader-text" id="loaderText">Cihaz parametreleri okunuyor...</div>
-            </div>
-
-            <div class="result-card" id="resultCard">
-                <div class="ai-badge">⚡ wedzx AI V2 Algoritması Tamamlandı</div>
-                <div class="result-title" id="resultDeviceName">İsim</div>
-                <div class="sensitivity-grid">
-                    <div class="sens-item">
-                        <span>Genel</span>
-                        <div class="sens-value" id="resGen">0</div>
-                    </div>
-                    <div class="sens-item">
-                        <span>Kırmızı Nokta</span>
-                        <div class="sens-value" id="resRed">0</div>
-                    </div>
-                    <div class="sens-item">
-                        <span>2X Dürbün</span>
-                        <div class="sens-value" id="res2x">0</div>
-                    </div>
-                    <div class="sens-item">
-                        <span>4X Dürbün</span>
-                        <div class="sens-value" id="res4x">0</div>
-                    </div>
-                    <div class="sens-item">
-                        <span>AWM Dürbünü</span>
-                        <div class="sens-value" id="resAwm">0</div>
-                    </div>
-                    <div class="sens-item dpi-box">
-                        <span>Önerilen DPI Seviyesi</span>
-                        <div class="sens-value" id="resDpi">Gerek Yok</div>
-                    </div>
-                </div>
-            </div>
+        <label>FPS</label>
+        <div class="fps-grid">
+            <div class="fps-btn" onclick="selectFps(this)">60 FPS</div>
+            <div class="fps-btn" onclick="selectFps(this)">90 FPS</div>
+            <div class="fps-btn" onclick="selectFps(this)">120 FPS</div>
         </div>
 
+        <button onclick="generate()">AI HASSASİYET OLUŞTUR</button>
     </div>
 
-    <footer>
-        <p>&copy; 2026 wedzx V2. Tüm hakları saklıdır. Bu site hayran yapımıdır.</p>
-    </footer>
+    <footer>© WEDZXSENSI • FREE FIRE İÇİN OPTİMİZE EDİLMİŞTİR</footer>
 
     <script>
-        // iPhone serileri ve popüler tüm Android'leri barındıran veri havuzu
-        const database = {
-            ios: [
-                { name: "iPhone 15 Pro Max", gen: 94, red: 90, x2: 85, x4: 80, awm: 40, dpi: "Gerek Yok (iOS Akıcılığı)" },
-                { name: "iPhone 15 Pro", gen: 95, red: 91, x2: 86, x4: 81, awm: 41, dpi: "Gerek Yok" },
-                { name: "iPhone 15 Plus", gen: 96, red: 92, x2: 87, x4: 82, awm: 43, dpi: "Gerek Yok" },
-                { name: "iPhone 15", gen: 97, red: 93, x2: 88, x4: 83, awm: 45, dpi: "Gerek Yok" },
-                { name: "iPhone 14 Pro Max", gen: 94, red: 90, x2: 85, x4: 80, awm: 42, dpi: "Gerek Yok" },
-                { name: "iPhone 14 Pro", gen: 95, red: 91, x2: 86, x4: 81, awm: 43, dpi: "Gerek Yok" },
-                { name: "iPhone 14 / 14 Plus", gen: 97, red: 94, x2: 89, x4: 84, awm: 46, dpi: "Gerek Yok" },
-                { name: "iPhone 13 Pro Max", gen: 95, red: 92, x2: 87, x4: 82, awm: 45, dpi: "Gerek Yok" },
-                { name: "iPhone 13 / 13 Pro", gen: 98, red: 95, x2: 90, x4: 85, awm: 48, dpi: "Gerek Yok" },
-                { name: "iPhone 12 / 12 Pro Max", gen: 99, red: 96, x2: 92, x4: 87, awm: 50, dpi: "Gerek Yok" },
-                { name: "iPhone 11 Pro / Pro Max", gen: 100, red: 98, x2: 94, x4: 89, awm: 52, dpi: "Gerek Yok" },
-                { name: "iPhone 11", gen: 100, red: 99, x2: 95, x4: 90, awm: 55, dpi: "Gerek Yok" },
-                { name: "iPhone XS / XS Max / XR", gen: 100, red: 100, x2: 97, x4: 92, awm: 58, dpi: "Gerek Yok" },
-                { name: "iPhone X / 8 Plus", gen: 100, red: 100, x2: 98, x4: 95, awm: 60, dpi: "Gerek Yok" }
-            ],
-            android: [
-                { name: "Samsung Galaxy S24 Ultra", gen: 92, red: 88, x2: 85, x4: 80, awm: 40, dpi: "410 (Hassas)" },
-                { name: "Samsung Galaxy S23 Ultra / S22", gen: 95, red: 90, x2: 87, x4: 82, awm: 44, dpi: "450" },
-                { name: "Samsung Galaxy A54 / A55", gen: 98, red: 95, x2: 90, x4: 86, awm: 48, dpi: "490" },
-                { name: "Xiaomi 13 / 14 Pro", gen: 93, red: 89, x2: 86, x4: 81, awm: 42, dpi: "440" },
-                { name: "Xiaomi Redmi Note 13 Pro+", gen: 97, red: 94, x2: 91, x4: 87, awm: 49, dpi: "520" },
-                { name: "Xiaomi Redmi Note 11 / 12 Pro", gen: 99, red: 96, x2: 93, x4: 88, awm: 52, dpi: "550" },
-                { name: "POCO X6 Pro / F5", gen: 95, red: 91, x2: 88, x4: 83, awm: 45, dpi: "480" },
-                { name: "POCO X3 Pro / X4 Pro", gen: 98, red: 95, x2: 91, x4: 86, awm: 49, dpi: "510" },
-                { name: "Realme GT Series / 11 Pro", gen: 96, red: 92, x2: 89, x4: 84, awm: 46, dpi: "490" },
-                { name: "Infinix Note 30 / 40 Pro", gen: 100, red: 97, x2: 94, x4: 89, awm: 53, dpi: "560" },
-                { name: "Diğer Giriş Segment Android Cihazlar", gen: 100, red: 100, x2: 98, x4: 95, awm: 58, dpi: "580 - 600" }
-            ]
-        };
-
-        // Seçilen işletim sistemine göre cihaz model listesini yeniler
-        function updateModels() {
-            const osSelect = document.getElementById("os").value;
-            const modelSelect = document.getElementById("model");
-            
-            modelSelect.innerHTML = '<option value="">Model Seçiniz...</option>';
-            
-            if (osSelect === "") {
-                modelSelect.innerHTML = '<option value="">Önce işletim sistemi seçin</option>';
-                return;
-            }
-
-            const models = database[osSelect];
-            models.forEach((device, index) => {
-                const option = document.createElement("option");
-                option.value = index;
-                option.text = device.name;
-                modelSelect.appendChild(option);
-            });
+        function selectFps(el) {
+            document.querySelectorAll('.fps-btn').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
         }
 
-        // Yapay Zeka Hesaplama Animasyonu ve Algoritması
-        function startAICalculation() {
-            const osSelect = document.getElementById("os").value;
-            const modelIndex = document.getElementById("model").value;
-            const playstyle = document.getElementById("playstyle").value;
-
-            const loader = document.getElementById("loader");
-            const loaderText = document.getElementById("loaderText");
-            const resultCard = document.getElementById("resultCard");
-
-            if (osSelect === "" || modelIndex === "") {
-                alert("Lütfen işletim sistemi ve cihaz modelinizi seçin!");
-                return;
-            }
-
-            // Önceki sonuçları gizle ve animasyonu aç
-            resultCard.style.display = "none";
-            loader.style.display = "block";
-
-            // Aşama aşama yükleme metinleri (Yapay zeka illüzyonu)
-            const phases = [
-                "Cihaz ekran tazeleme hızı analiz ediliyor...",
-                "Ekran hassasiyet direnci hesaplanıyor...",
-                "Sürükleme hızı katsayısı optimize ediliyor...",
-                "Hassasiyet kodları wedzx V2 tarafından üretildi!"
-            ];
-
-            let step = 0;
-            const interval = setInterval(() => {
-                if (step < phases.length) {
-                    loaderText.innerText = phases[step];
-                    step++;
-                } else {
-                    clearInterval(interval);
-                    loader.style.display = "none";
-                    showResults(osSelect, modelIndex, playstyle);
-                }
-            }, 600); // Toplam 2.4 saniye yapay zeka beklemesi
-        }
-
-        // Hesaplanan Sonuçları Ekrana Getirme Fonksiyonu
-        function showResults(os, index, style) {
-            const baseSettings = database[os][index];
-            const resultCard = document.getElementById("resultCard");
-
-            let finalGen = baseSettings.gen;
-            let finalRed = baseSettings.red;
-            let final2x = baseSettings.x2;
-            let final4x = baseSettings.x4;
-            let finalAwm = baseSettings.awm;
-
-            // Yapay Zeka Mantığı: Oyun tarzına göre ince ayarlar
-            if (style === "rusher") {
-                // Yakın mesafe için daha kaygan ve hızlı hassasiyet
-                finalGen = Math.min(100, finalGen + 3);
-                finalRed = Math.min(100, finalRed + 2);
-                final2x = Math.min(100, final2x + 1);
-                finalAwm = Math.min(100, finalAwm + 4);
-            } else if (style === "sniper") {
-                // Uzak mesafe için daha yavaş, sarsılmayan stabil nişan hattı
-                finalGen = Math.max(10, finalGen - 4);
-                finalRed = Math.max(10, finalRed - 3);
-                final4x = Math.max(10, final4x - 5);
-                finalAwm = Math.max(10, finalAwm - 8);
-            }
-
-            // Verileri elementlere yazdır
-            let styleText = style === "rusher" ? "Rusher" : style === "sniper" ? "Sniper" : "Dengeli";
-            document.getElementById("resultDeviceName").innerText = `${baseSettings.name} [${styleText}]`;
-            
-            document.getElementById("resGen").innerText = finalGen;
-            document.getElementById("resRed").innerText = finalRed;
-            document.getElementById("res2x").innerText = final2x;
-            document.getElementById("res4x").innerText = final4x;
-            document.getElementById("resAwm").innerText = finalAwm;
-            document.getElementById("resDpi").innerText = baseSettings.dpi;
-
-            // Sonuç kartını animasyonlu göster
-            resultCard.style.display = "block";
+        function generate() {
+            const model = document.getElementById('model').value;
+            if(!model) { alert("Lütfen cihaz modeli girin!"); return; }
+            alert("AI " + model + " için veriler analiz ediliyor...");
         }
     </script>
 </body>
