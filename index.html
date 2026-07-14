@@ -2,68 +2,69 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>wedzx V2 - Hassasiyet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wedzXsensi W2 PRO</title>
     <style>
-        /* Tasarım ve Neon Animasyonları */
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow: hidden; }
-        #canvas { position: absolute; top: 0; left: 0; z-index: -1; }
-        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: rgba(0,0,0,0.6); }
-        h1 { color: #ff0000; text-shadow: 0 0 10px #ff0000; font-size: 3rem; margin-bottom: 20px; }
-        select, input, button { width: 300px; padding: 12px; margin: 10px; border: 1px solid #ff0000; background: #1a0000; color: #fff; border-radius: 5px; outline: none; }
-        button { cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { background: #ff0000; color: #000; }
-        #output { margin-top: 20px; padding: 20px; border: 1px dashed #ff0000; text-align: center; display: none; }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+        
+        .card { 
+            background: rgba(15, 15, 15, 0.9); 
+            padding: 30px; 
+            border: 2px solid #ff0000; 
+            box-shadow: 0 0 25px #ff0000; 
+            border-radius: 20px; 
+            width: 320px; 
+            text-align: center;
+        }
+        
+        h1 { color: #ff5555; text-shadow: 0 0 15px #ff0000; margin-bottom: 25px; font-size: 1.8rem; }
+        
+        .btn { 
+            display: block; width: 100%; padding: 15px; margin: 10px 0; 
+            background: #1a0000; border: 1px solid #ff0000; color: #fff; 
+            border-radius: 10px; cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        .btn:hover { background: #ff0000; color: #000; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
-    
-    <div class="container">
-        <h1>wedzx V2</h1>
-        <select id="brand">
-            <option value="iphone">iPhone (XS - 17 Pro Max)</option>
-            <option value="android">Android (Samsung, Xiaomi, POCO, vb.)</option>
-        </select>
-        <input type="text" id="model" placeholder="Model Girin (Örn: 15 Pro Max veya S24)">
-        <button onclick="calculate()">Hassasiyeti Göster</button>
-        <div id="output"></div>
+    <canvas id="stars"></canvas>
+
+    <div class="card">
+        <h1>wedzXsensi W2 PRO</h1>
+        <div id="menu">
+            <button class="btn" onclick="next('model')">iPhone</button>
+            <button class="btn" onclick="next('model')">Android</button>
+            <button class="btn" onclick="next('model')">PC</button>
+        </div>
     </div>
 
     <script>
-        // Arka plan neon ağ animasyonu
-        const canvas = document.getElementById('canvas');
+        // Neon Parçacık Animasyonu
+        const canvas = document.getElementById('stars');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let particles = Array.from({length: 50}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: Math.random()-0.5, vy: Math.random()-0.5}));
+        let p = Array.from({length: 80}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2, color: Math.random() > 0.5 ? '#ff0000' : '#00aaff'}));
         
-        function draw() {
+        function animate() {
             ctx.fillStyle = 'rgba(0,0,0,0.1)'; ctx.fillRect(0,0,canvas.width, canvas.height);
-            ctx.strokeStyle = '#ff0000';
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x<0 || p.x>canvas.width) p.vx *= -1;
-                if(p.y<0 || p.y>canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.stroke();
+            p.forEach(s => {
+                ctx.fillStyle = s.color;
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+                s.y -= 0.5; if(s.y < 0) s.y = canvas.height;
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animate);
         }
-        draw();
+        animate();
 
-        // Hassasiyet Hesaplama Mantığı
-        function calculate() {
-            const brand = document.getElementById('brand').value;
-            const output = document.getElementById('output');
-            let res = "";
-
-            if(brand === 'iphone') {
-                res = "GENEL: 95 | KIRMIZI NOKTA: 88 | 2X: 82 | 4X: 75 | SNIPER: 50";
-            } else {
-                res = "GENEL: 185 | KIRMIZI NOKTA: 195 | 2X: 170 | 4X: 165 | SNIPER: 140";
+        // Basit Navigasyon Mantığı
+        function next(step) {
+            const menu = document.getElementById('menu');
+            if(step === 'model') {
+                menu.innerHTML = `<input type="text" id="m" style="width:90%; padding:10px; background:#111; color:#fff; border:1px solid #ff0000;" placeholder="Telefon modeli yaz"><button class="btn" onclick="alert('Hassasiyet oluşturuluyor...')">Devam</button>`;
             }
-            
-            output.style.display = 'block';
-            output.innerHTML = `<h3>${document.getElementById('model').value.toUpperCase()} İçin Ayarlar:</h3><p>${res}</p>`;
         }
     </script>
 </body>
