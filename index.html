@@ -2,88 +2,68 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wedzxsensi | AI Hassasiyet</title>
+    <title>wedzx V2 - Hassasiyet</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
-        
-        :root { --neon-red: #ff1f1f; --bg-dark: #0a0a0a; }
-        
-        body {
-            background-color: var(--bg-dark);
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; margin: 0;
-            background-image: radial-gradient(circle, #1a0505 0%, #0a0a0a 80%);
-        }
-
-        .logo { font-size: 3rem; font-weight: 700; margin-bottom: 5px; }
-        .logo span { color: var(--neon-red); }
-        .subtitle { color: #555; letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 40px; }
-
-        .box {
-            width: 350px; padding: 30px;
-            background: rgba(20, 20, 20, 0.6);
-            border: 1px solid #333; border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        label { color: #888; font-size: 0.8rem; display: block; margin-bottom: 10px; }
-        
-        input {
-            width: 100%; padding: 15px; box-sizing: border-box;
-            background: #111; border: 1px solid #333; color: white;
-            border-radius: 8px; margin-bottom: 25px; outline: none;
-        }
-
-        .fps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .fps-btn {
-            background: #111; border: 1px solid #333; color: #777;
-            padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        .fps-btn.active { background: var(--neon-red); border-color: var(--neon-red); color: white; }
-
-        button {
-            width: 100%; padding: 18px; background: var(--neon-red);
-            border: none; border-radius: 8px; color: white;
-            font-weight: bold; cursor: pointer; font-size: 1.1rem;
-        }
-
-        footer { margin-top: 30px; font-size: 0.7rem; color: #444; letter-spacing: 2px; }
+        /* Tasarım ve Neon Animasyonları */
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow: hidden; }
+        #canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: rgba(0,0,0,0.6); }
+        h1 { color: #ff0000; text-shadow: 0 0 10px #ff0000; font-size: 3rem; margin-bottom: 20px; }
+        select, input, button { width: 300px; padding: 12px; margin: 10px; border: 1px solid #ff0000; background: #1a0000; color: #fff; border-radius: 5px; outline: none; }
+        button { cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #ff0000; color: #000; }
+        #output { margin-top: 20px; padding: 20px; border: 1px dashed #ff0000; text-align: center; display: none; }
     </style>
 </head>
 <body>
 
-    <div class="logo">wedz<span>x</span>sensi</div>
-    <div class="subtitle">FREE FIRE • AI HASSASİYET MOTORU</div>
-
-    <div class="box">
-        <label>CİHAZ MODELİ</label>
-        <input type="text" id="model" placeholder="Örn. iPhone 13, Redmi Note 13">
-        
-        <label>FPS</label>
-        <div class="fps-grid">
-            <div class="fps-btn" onclick="selectFps(this)">60 FPS</div>
-            <div class="fps-btn" onclick="selectFps(this)">90 FPS</div>
-            <div class="fps-btn" onclick="selectFps(this)">120 FPS</div>
-        </div>
-
-        <button onclick="generate()">AI HASSASİYET OLUŞTUR</button>
+    <canvas id="canvas"></canvas>
+    
+    <div class="container">
+        <h1>wedzx V2</h1>
+        <select id="brand">
+            <option value="iphone">iPhone (XS - 17 Pro Max)</option>
+            <option value="android">Android (Samsung, Xiaomi, POCO, vb.)</option>
+        </select>
+        <input type="text" id="model" placeholder="Model Girin (Örn: 15 Pro Max veya S24)">
+        <button onclick="calculate()">Hassasiyeti Göster</button>
+        <div id="output"></div>
     </div>
 
-    <footer>© WEDZXSENSI • FREE FIRE İÇİN OPTİMİZE EDİLMİŞTİR</footer>
-
     <script>
-        function selectFps(el) {
-            document.querySelectorAll('.fps-btn').forEach(btn => btn.classList.remove('active'));
-            el.classList.add('active');
+        // Arka plan neon ağ animasyonu
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = Array.from({length: 50}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: Math.random()-0.5, vy: Math.random()-0.5}));
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0,0,0,0.1)'; ctx.fillRect(0,0,canvas.width, canvas.height);
+            ctx.strokeStyle = '#ff0000';
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x<0 || p.x>canvas.width) p.vx *= -1;
+                if(p.y<0 || p.y>canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.stroke();
+            });
+            requestAnimationFrame(draw);
         }
+        draw();
 
-        function generate() {
-            const model = document.getElementById('model').value;
-            if(!model) { alert("Lütfen cihaz modeli girin!"); return; }
-            alert("AI " + model + " için veriler analiz ediliyor...");
+        // Hassasiyet Hesaplama Mantığı
+        function calculate() {
+            const brand = document.getElementById('brand').value;
+            const output = document.getElementById('output');
+            let res = "";
+
+            if(brand === 'iphone') {
+                res = "GENEL: 95 | KIRMIZI NOKTA: 88 | 2X: 82 | 4X: 75 | SNIPER: 50";
+            } else {
+                res = "GENEL: 185 | KIRMIZI NOKTA: 195 | 2X: 170 | 4X: 165 | SNIPER: 140";
+            }
+            
+            output.style.display = 'block';
+            output.innerHTML = `<h3>${document.getElementById('model').value.toUpperCase()} İçin Ayarlar:</h3><p>${res}</p>`;
         }
     </script>
 </body>
